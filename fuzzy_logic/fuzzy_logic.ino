@@ -18,6 +18,7 @@
 #define sensorCenter 2
 #define DELAY 1000 // Serial Delay
 
+
 // Direction Defintions:
 enum DIR
 {
@@ -29,18 +30,22 @@ enum DIR
   TURN_LEFT
 };
 
+
+// Init Enum:
+DIR currentDirection = STOP;
+DIR nextDirection = STOP;
+
+
 // Variables:
 Servo leftServo;
 Servo rightServo;
 int leftValue = 0;
 int rightValue = 0;
 int centerValue = 0;
+String sensorString = ""; 
 
 
-DIR currentDirection = STOP;
-DIR nextDirection = STOP;
-
- 
+// Setup Loop:
 void setup() {
   #ifdef SERIAL
     Serial.begin(9600);
@@ -60,9 +65,12 @@ void loop() {
 
   // Serial Monitoring:
   #ifdef SERIAL
-    Serial.println("Center: " + centerValue);
-    Serial.println("Left: " + leftValue);
-    Serial.println("Right: " + rightValue);
+    sensorString = "Center: " + centerValue;
+    Serial.println(sensorString);
+    sensorString = "Left: " + leftValue;
+    Serial.println(sensorString);
+    sensorString = "Right: " + rightValue;
+    Serial.println(sensorString);
     delay(DELAY);
   #endif
 
