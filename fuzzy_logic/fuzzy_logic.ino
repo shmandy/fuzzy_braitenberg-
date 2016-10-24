@@ -13,28 +13,9 @@
 // Pin Definitions:
 #define servoLeft 9
 #define servoRight 10
-#define sensorRight 0
+#define sensorRight 2
 #define sensorLeft 1
-#define sensorCenter 2
 #define DELAY 1000 // Serial Delay
-
-
-// Direction Defintions:
-enum DIR
-{
-  STOP,
-  FORWARD,
-  BACKWARD_SLOW,
-  BACKWARD,
-  TURN_RIGHT,
-  TURN_LEFT
-};
-
-
-// Init Enum:
-DIR currentDirection = STOP;
-DIR nextDirection = STOP;
-
 
 // Variables:
 Servo leftServo;
@@ -59,86 +40,18 @@ void setup() {
 void loop() {
 
   // Read Sensors:
-  centerValue = analogRead(sensorCenter);
   rightValue = analogRead(sensorRight);
   leftValue = analogRead(sensorLeft);
 
   // Serial Monitoring:
   #ifdef SERIAL
-    sensorString = "Center: " + centerValue;
-    Serial.println(sensorString);
-    sensorString = "Left: " + leftValue;
-    Serial.println(sensorString);
-    sensorString = "Right: " + rightValue;
-    Serial.println(sensorString);
+    Serial.println(rightValue);
+    Serial.println(leftValue);
     delay(DELAY);
   #endif
 
-  // Servo Movement Control:  
-  if(nextDirection != STOP) // If Stopped:
-  {
-    if(!leftServo.attached())
-      leftServo.attach(servoLeft);
-    if(!rightServo.attached())
-      rightServo.attach(servoRight);
-  }
-  
-  // Direction Control
-  switch(nextDirection)
-  {
-      case STOP: // Stop
-      {
-        leftServo.detach();
-        rightServo.detach(); 
-      }
-      break;
-
-      case FORWARD: // Forward
-      {
-   
-        leftServo.write(140);
-        rightServo.write(140);
-      }
-      break;
-      
-      case BACKWARD: // Backward Fast
-      {
-         leftServo.write(0);
-         rightServo.write(0);
-      }
-      break;
-      
-      case BACKWARD_SLOW: // Backward Slow
-      {
-         leftServo.write(80);
-         rightServo.write(80);
-      }
-      break;
-
-      case TURN_RIGHT:   // Turn Right
-      {
-         leftServo.write(140); // Forward
-         rightServo.write(80); // Backward
-      }
-      break;
-
-      case TURN_LEFT: // Turn Left
-      {
-         rightServo.write(140); // Forward
-         leftServo.write(80); // Backward
-         
-      }
-      break;
-      
-      default: // Stop
-      {
-        leftServo.detach();
-        rightServo.detach();
-      }
-      break;
-  }
-
-  // Simple
-  
+  //here is where we will actually write the values to the servos (membership function or debug)
+  leftServo.detach();
+  rightServo.detach();
 
 }
